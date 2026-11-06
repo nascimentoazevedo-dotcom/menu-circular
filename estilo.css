@@ -1,0 +1,176 @@
+
+/* Inclui bordas e preenchimento no tamanho dos elementos. */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(135deg, #000428, #4b0082);
+  color: #ccc;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  margin: 20px 0 0;
+  color: white;
+  font-size: 28px;
+  text-align: center;
+}
+
+/* Área que contém o botão central e as opções. */
+.menu {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+/* Botão central. */
+#alternar {
+  position: absolute;
+  left: 127px;
+  top: 127px;
+
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+
+  background: #252525;
+  color: white;
+
+  box-shadow: 0 0 15px white;
+
+  cursor: pointer;
+  z-index: 2;
+}
+
+#alternar span {
+  font-size: 32px;
+  transition: transform 0.3s;
+}
+
+/* Gira o sinal de + para formar um X. */
+.menu.aberto #alternar span {
+  transform: rotate(45deg);
+}
+
+/* Estado fechado: opções no centro e invisíveis. */
+#opcoes a {
+  position: absolute;
+  left: 127px;
+  top: 127px;
+
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  text-decoration: none;
+  border: 2px solid var(--cor);
+  border-radius: 50%;
+
+  background: #151515;
+  color: var(--cor);
+  box-shadow: 0 0 10px var(--cor);
+
+  opacity: 0;
+  pointer-events: none;
+
+  transform: translate(0, 0) rotate(45deg) scale(0);
+
+  transition:
+    transform 0.8s ease var(--atraso),
+    opacity 0.8s ease var(--atraso),
+    background 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
+}
+
+/* Ordem de fechamento: última opção primeiro. */
+#opcoes a:nth-child(1) { --atraso: 1.05s; }
+#opcoes a:nth-child(2) { --atraso: 0.90s; }
+#opcoes a:nth-child(3) { --atraso: 0.75s; }
+#opcoes a:nth-child(4) { --atraso: 0.60s; }
+#opcoes a:nth-child(5) { --atraso: 0.45s; }
+#opcoes a:nth-child(6) { --atraso: 0.30s; }
+#opcoes a:nth-child(7) { --atraso: 0.15s; }
+#opcoes a:nth-child(8) { --atraso: 0s; }
+
+/* Estado aberto: opções distribuídas ao redor do centro. */
+.menu.aberto #opcoes a {
+  opacity: 1;
+  pointer-events: auto;
+
+  transform:
+    translate(var(--x), var(--y))
+    rotate(45deg)
+    scale(1);
+}
+
+/* Ordem de abertura: primeira opção primeiro. */
+.menu.aberto #opcoes a:nth-child(1) { --atraso: 0s; }
+.menu.aberto #opcoes a:nth-child(2) { --atraso: 0.15s; }
+.menu.aberto #opcoes a:nth-child(3) { --atraso: 0.30s; }
+.menu.aberto #opcoes a:nth-child(4) { --atraso: 0.45s; }
+.menu.aberto #opcoes a:nth-child(5) { --atraso: 0.60s; }
+.menu.aberto #opcoes a:nth-child(6) { --atraso: 0.75s; }
+.menu.aberto #opcoes a:nth-child(7) { --atraso: 0.90s; }
+.menu.aberto #opcoes a:nth-child(8) { --atraso: 1.05s; }
+
+/* Mantém os símbolos retos dentro dos botões girados. */
+#opcoes a span {
+  font-size: 30px;
+  transform: rotate(-45deg);
+}
+
+/* Destaque ao passar o mouse ou navegar com o teclado. */
+#opcoes a:hover,
+#opcoes a:focus-visible {
+  background: var(--cor);
+  color: #151515;
+  box-shadow: 0 0 25px var(--cor);
+}
+
+#alternar:focus-visible,
+#opcoes a:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 5px;
+}
+
+#mensagem {
+  max-width: 400px;
+  padding: 0 15px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+footer {
+  color: white;
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+/* Respeita a preferência por movimentos reduzidos. */
+@media (prefers-reduced-motion: reduce) {
+  #alternar span,
+  #opcoes a {
+    transition: none;
+  }
+}
